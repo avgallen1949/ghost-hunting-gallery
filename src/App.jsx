@@ -242,7 +242,7 @@ const App = () => {
       )}
 
       {/* Header */}
-      <div className="text-black text-center py-3 text-2xl font-bold italic" style={{ backgroundColor: '#ff1200' }}>
+      <div className="bg-black text-white text-center py-3 text-2xl font-bold italic">
         ALL NOISE IS POTENTIAL SIGNAL
       </div>
 
@@ -262,8 +262,8 @@ const App = () => {
             <div
               key={img.id}
               data-image-id={img.id}
-              className="bg-black cursor-pointer relative border-2"
-              style={{ aspectRatio: '16/9', borderColor: '#fff200' }}
+              className="bg-black cursor-pointer relative border"
+              style={{ aspectRatio: '16/9', borderColor: 'white' }}
               onClick={() => openGalleryView(img.id)}
             >
               <img
@@ -394,7 +394,7 @@ const App = () => {
               </button>
 
               {/* Image Container */}
-              <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '4px solid #fff200' }}>
+              <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '4px solid white' }}>
                 <img
                   ref={imageRef}
                   src={images[selectedImage].url}
@@ -425,25 +425,22 @@ const App = () => {
               </button>
 
               {/* Tool Selection */}
-              <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex gap-4 p-3 rounded z-50" style={{ backgroundColor: '#ff1200' }}>
+              <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex gap-4 p-3 rounded z-50 bg-black">
                 <button
                   onClick={() => setCurrentTool(currentTool === 'circle' ? null : 'circle')}
-                  className={`p-3 rounded ${currentTool === 'circle' ? 'text-red-600' : 'text-black'}`}
-                  style={{ backgroundColor: currentTool === 'circle' ? '#fff200' : '#ff1200' }}
+                  className={`p-3 rounded ${currentTool === 'circle' ? 'bg-white text-black' : 'bg-black text-white border border-white'}`}
                 >
                   <Circle size={24} />
                 </button>
                 <button
                   onClick={() => setCurrentTool(currentTool === 'rectangle' ? null : 'rectangle')}
-                  className={`p-3 rounded ${currentTool === 'rectangle' ? 'text-red-600' : 'text-black'}`}
-                  style={{ backgroundColor: currentTool === 'rectangle' ? '#fff200' : '#ff1200' }}
+                  className={`p-3 rounded ${currentTool === 'rectangle' ? 'bg-white text-black' : 'bg-black text-white border border-white'}`}
                 >
                   <Square size={24} />
                 </button>
                 <button
                   onClick={() => setCurrentTool(currentTool === 'arrow' ? null : 'arrow')}
-                  className={`p-3 rounded ${currentTool === 'arrow' ? 'text-red-600' : 'text-black'}`}
-                  style={{ backgroundColor: currentTool === 'arrow' ? '#fff200' : '#ff1200' }}
+                  className={`p-3 rounded ${currentTool === 'arrow' ? 'bg-white text-black' : 'bg-black text-white border border-white'}`}
                 >
                   <MoveRight size={24} />
                 </button>
@@ -457,9 +454,9 @@ const App = () => {
           className={`absolute bottom-0 left-0 right-0 transition-transform duration-300 ${
             infoOpen ? 'translate-y-0' : 'translate-y-full'
           }`}
-          style={{ height: 'calc(100% - 120px)', backgroundColor: '#ff1200' }}
+          style={{ height: 'calc(100% - 120px)', backgroundColor: 'black' }}
         >
-          <div className="p-8 text-black overflow-y-auto h-full">
+          <div className="p-8 text-white overflow-y-auto h-full">
             <p className="text-lg leading-relaxed mb-4">
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
             </p>
@@ -471,7 +468,7 @@ const App = () => {
       </div>
 
       {/* Footer */}
-      <div className="text-black py-3 px-6 flex justify-between items-center text-lg font-bold italic" style={{ backgroundColor: '#ff1200' }}>
+      <div className="bg-black text-white py-3 px-6 flex justify-between items-center text-lg font-bold italic">
         <button
           onClick={() => setInfoOpen(!infoOpen)}
           className="hover:underline"
