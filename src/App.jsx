@@ -272,10 +272,10 @@ const App = () => {
           <div className="p-8 text-white overflow-y-auto h-full">
             <div className="max-w-none md:max-w-[60%]">
               <p className="text-lg leading-relaxed mb-4">
-Apophenia is defined as the perception of patterns within random data. The most common examples are people seeing faces in clouds or on the moon. Apophenia is about drawing connections and conclusions from sources with no direct connection other than their indissoluble perceptual simultaneity. This has become necessary to adapt to our world today. Constant apophenia is hyperaesthetic response.              </p>
-              <p className="text-lg leading-relaxed">
-Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embodied by the conspiracy theorist and the paranormal hunter — overwhelming diagrams, arrows, blurry images, labeling, glitch-as-proof, and infinite connections. It can be thought of as an opposite to what Susan Buck-Morss describes as anaesthetic experience — the dulling of our senses from overwhelm. These responses to modern shock, technologies, global political crises, and opacity in the world are not opposites as much as they are sisters. They both point to the same issue but ultimately do not lead us through the problem, but stuck within it.
-              </p>
+Apophenia is defined as the perception of patterns within random data. The most common examples are people seeing faces in clouds or on the moon. Apophenia is about drawing connections and conclusions from sources with no direct connection other than their perceptual simultaneity. This has become necessary to adapt to our world today. Constant apophenia is hyper-aesthetic response.</p>              
+<p className="text-lg leading-relaxed">
+Hyper-aesthetics, I argue, is when all noise becomes potential signal. It is embodied by the devout conspiracy theorist and the paranormal hunter — overwhelming diagrams, arrows, blurry images, labeling, glitch-as-proof, and infinite connections. Ghost hunting, while innocuous in this instance, requires a hyper-aesthetic engagement both during and after. It can be thought of as an opposite to what Susan Buck-Morss describes as anaesthetic experience — the dulling of our senses from overwhelm. The hyper-aesthetic body is hypervigilent and hyper-sensing. These responses to modern shock, technologies, global political crises, and opacity in the world are not opposites as much as they are sisters. They both point to the same issue but ultimately do not lead us through the problem, but stuck within it.              
+</p>
             </div>
           </div>
         </div>
