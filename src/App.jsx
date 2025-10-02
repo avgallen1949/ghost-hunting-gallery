@@ -169,7 +169,7 @@ const App = () => {
   };
 
   const drawAnnotation = (ctx, ann) => {
-    ctx.strokeStyle = '#ff1200';
+    ctx.strokeStyle = '#fff200';
     ctx.lineWidth = 3;
     
     const width = ann.endX - ann.startX;
@@ -232,9 +232,9 @@ const App = () => {
           style={{
             left: cursorPos.x,
             top: cursorPos.y,
-            width: '70px',
-            height: '70px',
-            border: '5px solid #ff1200',
+            width: '90px',
+            height: '90px',
+            border: '4px solid #fff200',
             borderRadius: '50%',
             transform: 'translate(-50%, -50%)',
           }}
@@ -272,7 +272,7 @@ const App = () => {
                 className="w-full h-full object-cover"
               />
               {annotations[img.id] && annotations[img.id].length > 0 && (
-                <div className="absolute inset-0 pointer-events-none z-10">
+                <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
                   {annotations[img.id].map((ann, idx) => {
                     console.log('Rendering annotation:', ann, 'for image:', img.id);
                     
@@ -298,7 +298,7 @@ const App = () => {
                             top: `${(Math.min(ann.startY, ann.endY) * scaleY)}px`,
                             width: `${(Math.abs(ann.endX - ann.startX) * scaleX)}px`,
                             height: `${(Math.abs(ann.endY - ann.startY) * scaleY)}px`,
-                            border: '2px solid #ff1200',
+                            border: '2px solid #fff200',
                             zIndex: 20,
                           }}
                         />
@@ -320,7 +320,7 @@ const App = () => {
                             top: `${(centerY * scaleY) - scaledRadius}px`,
                             width: `${scaledRadius * 2}px`,
                             height: `${scaledRadius * 2}px`,
-                            border: '2px solid #ff1200',
+                            border: '2px solid #fff200',
                             zIndex: 20,
                           }}
                         />
@@ -342,7 +342,7 @@ const App = () => {
                             top: `${startY}px`,
                             width: `${length}px`,
                             height: '2px',
-                            backgroundColor: '#ff1200',
+                            backgroundColor: '#fff200',
                             transformOrigin: '0 0',
                             transform: `rotate(${angle}rad)`,
                             zIndex: 20,
@@ -368,9 +368,9 @@ const App = () => {
               style={{
                 left: cursorPos.x,
                 top: cursorPos.y,
-                width: '70px',
-                height: '70px',
-                border: '5px solid #ff1200',
+                width: '90px',
+                height: '90px',
+                border: '4px solid #fff200',
                 borderRadius: '50%',
                 transform: 'translate(-50%, -50%)',
               }}
@@ -380,7 +380,7 @@ const App = () => {
               {/* Close Button */}
               <button
                 onClick={closeGalleryView}
-                className="absolute top-4 right-4 text-yellow-400 hover:text-yellow-300 z-50"
+                className="absolute top-4 right-4 text-white-400 hover:text-white-300 z-50"
               >
                 <X size={48} />
               </button>
@@ -388,13 +388,13 @@ const App = () => {
               {/* Previous Button */}
               <button
                 onClick={() => navigateImage(-1)}
-                className="absolute left-4 text-yellow-400 hover:text-yellow-300 text-6xl z-50"
+                className="absolute left-4 text-white-400 hover:text-white-300 text-6xl z-50"
               >
                 <ChevronLeft size={64} />
               </button>
 
               {/* Image Container */}
-              <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '4px solid white' }}>
+              <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '1px solid fff200' }}>
                 <img
                   ref={imageRef}
                   src={images[selectedImage].url}
@@ -419,7 +419,7 @@ const App = () => {
               {/* Next Button */}
               <button
                 onClick={() => navigateImage(1)}
-                className="absolute right-4 text-yellow-400 hover:text-yellow-300 text-6xl z-50"
+                className="absolute right-4 text-white-400 hover:text-white-300 text-6xl z-50"
               >
                 <ChevronRight size={64} />
               </button>

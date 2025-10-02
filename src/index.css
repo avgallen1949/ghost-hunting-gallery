@@ -8,6 +8,15 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'Exposure';
+  src: url('./ExposureItalic.otf') format('otf'),
+}
+
+.text-header {
+  font-family: 'Exposure', system-ui, -apple-system, sans-serif-serif;
+}
+
 body {
   font-family: system-ui, -apple-system, sans-serif;
 }
