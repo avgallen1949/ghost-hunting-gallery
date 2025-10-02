@@ -169,7 +169,7 @@ const App = () => {
   };
 
   const drawAnnotation = (ctx, ann) => {
-    ctx.strokeStyle = '#FFFF00';
+    ctx.strokeStyle = '#ff1200';
     ctx.lineWidth = 3;
     
     const width = ann.endX - ann.startX;
@@ -232,9 +232,9 @@ const App = () => {
           style={{
             left: cursorPos.x,
             top: cursorPos.y,
-            width: '40px',
-            height: '40px',
-            border: '5px solid red',
+            width: '50px',
+            height: '50px',
+            border: '5px solid #ff1200',
             borderRadius: '50%',
             transform: 'translate(-50%, -50%)',
           }}
@@ -242,7 +242,7 @@ const App = () => {
       )}
 
       {/* Header */}
-      <div className="bg-red-600 text-black text-center py-3 text-2xl font-bold italic">
+      <div className="text-black text-center py-3 text-2xl font-bold italic" style={{ backgroundColor: '#ff1200' }}>
         ALL NOISE IS POTENTIAL SIGNAL
       </div>
 
@@ -255,15 +255,15 @@ const App = () => {
       <div className="flex-1 overflow-hidden relative" 
            onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
         {/* Image Grid */}
-        <div className="grid gap-1 bg-black h-full overflow-y-auto p-1" style={{
-          gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))'
+        <div className="grid bg-black h-full overflow-y-auto" style={{
+          gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))'
         }}>
           {images.map((img) => (
             <div
               key={img.id}
               data-image-id={img.id}
-              className="bg-black cursor-pointer relative border-2 border-yellow-600"
-              style={{ aspectRatio: '16/9' }}
+              className="bg-black cursor-pointer relative border-2"
+              style={{ aspectRatio: '16/9', borderColor: '#fff200' }}
               onClick={() => openGalleryView(img.id)}
             >
               <img
@@ -288,12 +288,13 @@ const App = () => {
                       return (
                         <div
                           key={idx}
-                          className="absolute border-2 border-yellow-400 bg-transparent"
+                          className="absolute bg-transparent"
                           style={{
                             left: `${(Math.min(ann.startX, ann.endX) * scaleX)}px`,
                             top: `${(Math.min(ann.startY, ann.endY) * scaleY)}px`,
                             width: `${(Math.abs(ann.endX - ann.startX) * scaleX)}px`,
                             height: `${(Math.abs(ann.endY - ann.startY) * scaleY)}px`,
+                            border: '2px solid #ff1200',
                             zIndex: 20,
                           }}
                         />
@@ -309,12 +310,13 @@ const App = () => {
                       return (
                         <div
                           key={idx}
-                          className="absolute border-2 border-yellow-400 rounded-full bg-transparent"
+                          className="absolute rounded-full bg-transparent"
                           style={{
                             left: `${(centerX * scaleX) - scaledRadius}px`,
                             top: `${(centerY * scaleY) - scaledRadius}px`,
                             width: `${scaledRadius * 2}px`,
                             height: `${scaledRadius * 2}px`,
+                            border: '2px solid #ff1200',
                             zIndex: 20,
                           }}
                         />
@@ -330,12 +332,13 @@ const App = () => {
                       return (
                         <div
                           key={idx}
-                          className="absolute bg-yellow-400"
+                          className="absolute"
                           style={{
                             left: `${startX}px`,
                             top: `${startY}px`,
                             width: `${length}px`,
                             height: '2px',
+                            backgroundColor: '#ff1200',
                             transformOrigin: '0 0',
                             transform: `rotate(${angle}rad)`,
                             zIndex: 20,
@@ -361,9 +364,9 @@ const App = () => {
               style={{
                 left: cursorPos.x,
                 top: cursorPos.y,
-                width: '40px',
-                height: '40px',
-                border: '5px solid red',
+                width: '50px',
+                height: '50px',
+                border: '5px solid #ff1200',
                 borderRadius: '50%',
                 transform: 'translate(-50%, -50%)',
               }}
@@ -418,22 +421,25 @@ const App = () => {
               </button>
 
               {/* Tool Selection */}
-              <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex gap-4 bg-yellow-400 p-3 rounded z-50">
+              <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex gap-4 p-3 rounded z-50" style={{ backgroundColor: '#fff200' }}>
                 <button
                   onClick={() => setCurrentTool(currentTool === 'circle' ? null : 'circle')}
-                  className={`p-3 rounded ${currentTool === 'circle' ? 'bg-black text-yellow-400' : 'bg-yellow-400 text-black'} hover:bg-gray-800 hover:text-yellow-400 transition-colors`}
+                  className={`p-3 rounded ${currentTool === 'circle' ? 'text-black' : 'text-black'}`}
+                  style={{ backgroundColor: currentTool === 'circle' ? 'black' : '#fff200' }}
                 >
                   <Circle size={24} />
                 </button>
                 <button
                   onClick={() => setCurrentTool(currentTool === 'rectangle' ? null : 'rectangle')}
-                  className={`p-3 rounded ${currentTool === 'rectangle' ? 'bg-black text-yellow-400' : 'bg-yellow-400 text-black'} hover:bg-gray-800 hover:text-yellow-400 transition-colors`}
+                  className={`p-3 rounded ${currentTool === 'rectangle' ? 'text-black' : 'text-black'}`}
+                  style={{ backgroundColor: currentTool === 'rectangle' ? 'black' : '#fff200' }}
                 >
                   <Square size={24} />
                 </button>
                 <button
                   onClick={() => setCurrentTool(currentTool === 'arrow' ? null : 'arrow')}
-                  className={`p-3 rounded ${currentTool === 'arrow' ? 'bg-black text-yellow-400' : 'bg-yellow-400 text-black'} hover:bg-gray-800 hover:text-yellow-400 transition-colors`}
+                  className={`p-3 rounded ${currentTool === 'arrow' ? 'text-black' : 'text-black'}`}
+                  style={{ backgroundColor: currentTool === 'arrow' ? 'black' : '#fff200' }}
                 >
                   <MoveRight size={24} />
                 </button>
@@ -461,7 +467,7 @@ const App = () => {
       </div>
 
       {/* Footer */}
-      <div className="bg-red-600 text-black py-3 px-6 flex justify-between items-center text-lg font-bold italic">
+      <div className="text-black py-3 px-6 flex justify-between items-center text-lg font-bold italic" style={{ backgroundColor: '#ff1200' }}>
         <button
           onClick={() => setInfoOpen(!infoOpen)}
           className="hover:underline"
