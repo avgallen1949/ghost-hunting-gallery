@@ -394,7 +394,7 @@ const App = () => {
               </button>
 
               {/* Image Container */}
-              <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '1px solid fff200' }}>
+              <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '5px solid fff200' }}>
                 <img
                   ref={imageRef}
                   src={images[selectedImage].url}
