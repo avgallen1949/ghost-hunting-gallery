@@ -267,15 +267,15 @@ const App = () => {
           className={`absolute top-16 left-0 right-0 transition-transform duration-300 ${
             noiseOpen ? 'translate-y-0' : '-translate-y-full'
           }`}
-          style={{ height: 'calc(50% - 60px)', backgroundColor: 'black', zIndex: 90 }}
+          style={{ height: 'calc(100% - 180px)', backgroundColor: 'black', zIndex: 90 }}
         >
           <div className="p-8 text-white overflow-y-auto h-full">
             <div className="max-w-none md:max-w-[60%]">
               <p className="text-lg leading-relaxed mb-4">
-Apophenia is defined as the perception of patterns within random data. The most common examples are people seeing faces in clouds or on the moon. Apophenia is about drawing connections and conclusions from sources with no direct connection other than their indissoluble perceptual simultaneity. This has become necessary to adapt to our world today. Apophenia is hyperaesthetic response.                </p>
+Apophenia is defined as the perception of patterns within random data. The most common examples are people seeing faces in clouds or on the moon. Apophenia is about drawing connections and conclusions from sources with no direct connection other than their indissoluble perceptual simultaneity. This has become necessary to adapt to our world today. Constant apophenia is hyperaesthetic response.              </p>
               <p className="text-lg leading-relaxed">
-Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embodied by the conspiracy theorist and the paranormal hunter — overwhelming diagrams, arrows, blurry images, labeling, glitch-as-proof, and infinite connections. It can be thought of as an opposite to what Susan Buck-Morss describes as anesthetic experience — the dulling of our senses from overwhelm. These responses to modern shock, technologies, global political crises, and opacity in the world are not opposites as much as they are sisters. They both point to the same issue but ultimately do not lead us through the problem, but stuck within it.              
-</p>
+Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embodied by the conspiracy theorist and the paranormal hunter — overwhelming diagrams, arrows, blurry images, labeling, glitch-as-proof, and infinite connections. It can be thought of as an opposite to what Susan Buck-Morss describes as anaesthetic experience — the dulling of our senses from overwhelm. These responses to modern shock, technologies, global political crises, and opacity in the world are not opposites as much as they are sisters. They both point to the same issue but ultimately do not lead us through the problem, but stuck within it.
+              </p>
             </div>
           </div>
         </div>
@@ -503,9 +503,9 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
           <div className="p-8 text-white overflow-y-auto h-full">
             <div className="max-w-none md:max-w-[60%]">
               <p className="text-lg leading-relaxed mb-4">
-                The night of September 28, 2025, Brian taught Avrie about ghost hunting in Saint Patrick’s Cemetery in Providence, Rhode Island. They brought a GoPro camera, a cassette audio recorder, a digital audio recorder, and iPhones to take long exposure photos. This website documents their most interesting encounter through photo and audio documentation. The photos are stills from Avrie’s GoPro, which mysteriously turned out as a time lapse for this particular part of the night, and the audio is from Brian’s audio recorders layered over one another. The documentation has not been edited aside from the audio layering. However, due to the failure of the video camera, Avrie created this website to find potential anomalies in the stills. Please play the audio and label images using the provided tool in the gallery view.               </p>
+The night of September 28, 2025, Brian taught Avrie about ghost hunting in Saint Patrick’s Cemetery in Providence, Rhode Island. They brought a GoPro camera, a cassette audio recorder, a digital audio recorder, and iPhones to take long exposure photos. This website documents their most interesting encounter through photo and audio documentation. The photos are stills from Avrie’s GoPro, which mysteriously turned out as a time lapse for this particular part of the night, and the audio is from Brian’s audio recorders layered over one another. The documentation has not been edited aside from the audio layering. However, due to the failure of the video camera, Avrie created this website to find potential anomalies in the stills. Please play the audio and label images using the provided tool in the gallery view.               </p>
               <p className="text-lg leading-relaxed">
-                The interpretation is subjective, and all noise is potential signal. Thanks for your help.</p>
+The interpretation is subjective, and all noise is potential signal. Thanks for your help.              </p>
             </div>
           </div>
         </div>
