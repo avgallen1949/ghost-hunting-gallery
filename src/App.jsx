@@ -243,7 +243,7 @@ const App = () => {
 
       {/* Header */}
       <div className="bg-black text-white text-center py-3 text-2xl font-bold italic text-header">
-        ALL NOISE IS POTENTIAL SIGNAL
+        ALL NOISE IS POTENTIAL <span style={{ color: '#fff200' }}>SIGNAL</span>
       </div>
 
       {/* Audio Element */}
@@ -474,12 +474,14 @@ const App = () => {
           style={{ height: 'calc(100% - 120px)', backgroundColor: 'black', zIndex: 100 }}
         >
           <div className="p-8 text-white overflow-y-auto h-full">
-            <p className="text-lg leading-relaxed mb-4">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-            </p>
-            <p className="text-lg leading-relaxed">
-              Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-            </p>
+            <div className="max-w-none md:max-w-[60%]">
+              <p className="text-lg leading-relaxed mb-4">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+              </p>
+              <p className="text-lg leading-relaxed">
+                Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+              </p>
+            </div>
           </div>
         </div>
       </div>
