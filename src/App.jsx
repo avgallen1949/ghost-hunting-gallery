@@ -264,10 +264,10 @@ const App = () => {
            onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
         {/* Secret NOISE Panel */}
         <div
-          className={`absolute top-16 left-0 right-0 transition-transform duration-300 ${
+          className={`absolute top-0 left-0 right-0 transition-transform duration-300 ${
             noiseOpen ? 'translate-y-0' : '-translate-y-full'
           }`}
-          style={{ height: 'calc(100% - 180px)', backgroundColor: 'black', zIndex: 90 }}
+          style={{ height: 'calc(100% - 120px)', backgroundColor: 'black', zIndex: 90 }}
         >
           <div className="p-8 text-white overflow-y-auto h-full">
             <div className="max-w-none md:max-w-[60%]">
