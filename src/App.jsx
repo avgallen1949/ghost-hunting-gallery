@@ -238,7 +238,7 @@ const App = () => {
             <div
               key={img.id}
               data-image-id={img.id}
-              className="bg-black cursor-pointer relative hover:opacity-80 transition-opacity"
+              className="bg-black cursor-pointer relative"
               style={{ aspectRatio: '16/9' }}
               onClick={() => openGalleryView(img.id)}
             >
@@ -330,7 +330,22 @@ const App = () => {
 
         {/* Gallery View Modal */}
         {selectedImage !== null && (
-          <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center"
+               onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
+            {/* Custom Cursor for gallery view */}
+            <div
+              className="fixed pointer-events-none z-50"
+              style={{
+                left: cursorPos.x,
+                top: cursorPos.y,
+                width: '40px',
+                height: '40px',
+                border: '5px solid red',
+                borderRadius: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            />
+            
             <div className="relative w-full h-full flex items-center justify-center p-4">
               {/* Close Button */}
               <button
@@ -368,22 +383,7 @@ const App = () => {
                   onMouseEnter={() => setShowCursor(true)}
                   onMouseLeave={() => setShowCursor(false)}
                 />
-                {/* Custom Cursor */}
-                {showCursor && (
-                  <div
-                    className="absolute pointer-events-none"
-                    style={{
-                      left: cursorPos.x,
-                      top: cursorPos.y,
-                      width: '40px',
-                      height: '40px',
-                      border: '5px solid red',
-                      borderRadius: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      zIndex: 1000
-                    }}
-                  />
-                )}
+                {/* Custom Cursor - removed since we have the main one now */}
               </div>
 
               {/* Next Button */}
@@ -448,13 +448,13 @@ const App = () => {
         <div className="flex gap-8">
           <button
             onClick={toggleAudio}
-            className={!audioPlaying ? 'underline' : ''}
+            className={audioPlaying ? 'underline' : ''}
           >
             PLAY
           </button>
           <button
             onClick={toggleAudio}
-            className={audioPlaying ? 'underline' : ''}
+            className={!audioPlaying ? 'underline' : ''}
           >
             PAUSE
           </button>
