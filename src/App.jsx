@@ -39,8 +39,32 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (selectedImage !== null) {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          navigateImage(-1);
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          navigateImage(1);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [selectedImage]);
+
+  useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.play().catch(e => console.log('Auto-play prevented:', e));
+      // Try to play automatically, but handle if browser blocks it
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log('Auto-play was blocked:', error);
+          setAudioPlaying(false); // Update state if auto-play fails
+        });
+      }
     }
   }, []);
 
@@ -248,18 +272,16 @@ const App = () => {
                 className="w-full h-full object-cover"
               />
               {annotations[img.id] && annotations[img.id].length > 0 && (
-                <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-0 pointer-events-none z-10">
                   {annotations[img.id].map((ann, idx) => {
-                    // Get the original image dimensions (assuming 16:9 aspect ratio)
+                    console.log('Rendering annotation:', ann, 'for image:', img.id); // Debug log
+                    
+                    // Use fixed scaling based on typical thumbnail size
                     const originalWidth = 1600;
                     const originalHeight = 900;
+                    const thumbWidth = 200; // Approximate thumbnail width
+                    const thumbHeight = 112.5; // 16:9 ratio
                     
-                    // Calculate thumbnail dimensions
-                    const thumbnailElement = document.querySelector(`[data-image-id="${img.id}"]`);
-                    const thumbWidth = thumbnailElement ? thumbnailElement.offsetWidth : 200;
-                    const thumbHeight = thumbnailElement ? thumbnailElement.offsetHeight : 112.5;
-                    
-                    // Calculate scale factors
                     const scaleX = thumbWidth / originalWidth;
                     const scaleY = thumbHeight / originalHeight;
                     
@@ -267,12 +289,13 @@ const App = () => {
                       return (
                         <div
                           key={idx}
-                          className="absolute border-2 border-yellow-400"
+                          className="absolute border-2 border-yellow-400 bg-transparent"
                           style={{
                             left: `${(Math.min(ann.startX, ann.endX) * scaleX)}px`,
                             top: `${(Math.min(ann.startY, ann.endY) * scaleY)}px`,
                             width: `${(Math.abs(ann.endX - ann.startX) * scaleX)}px`,
                             height: `${(Math.abs(ann.endY - ann.startY) * scaleY)}px`,
+                            zIndex: 20,
                           }}
                         />
                       );
@@ -287,17 +310,17 @@ const App = () => {
                       return (
                         <div
                           key={idx}
-                          className="absolute border-2 border-yellow-400 rounded-full"
+                          className="absolute border-2 border-yellow-400 rounded-full bg-transparent"
                           style={{
                             left: `${(centerX * scaleX) - scaledRadius}px`,
                             top: `${(centerY * scaleY) - scaledRadius}px`,
                             width: `${scaledRadius * 2}px`,
                             height: `${scaledRadius * 2}px`,
+                            zIndex: 20,
                           }}
                         />
                       );
                     } else if (ann.type === 'arrow') {
-                      // For arrows, we'll show a simple line scaled down
                       const startX = ann.startX * scaleX;
                       const startY = ann.startY * scaleY;
                       const endX = ann.endX * scaleX;
@@ -308,14 +331,15 @@ const App = () => {
                       return (
                         <div
                           key={idx}
-                          className="absolute border-t-2 border-yellow-400"
+                          className="absolute bg-yellow-400"
                           style={{
                             left: `${startX}px`,
                             top: `${startY}px`,
                             width: `${length}px`,
-                            height: '0px',
+                            height: '2px',
                             transformOrigin: '0 0',
                             transform: `rotate(${angle}rad)`,
+                            zIndex: 20,
                           }}
                         />
                       );
