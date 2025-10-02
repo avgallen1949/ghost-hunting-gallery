@@ -17,11 +17,11 @@ const App = () => {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [showCursor, setShowCursor] = useState(false);
 
-  // Generate image paths for your 1160 frames
-  const images = Array.from({ length: 1160 }, (_, i) => ({
+  // Generate image paths for your 1160 frames (frame_0000.jpg to frame_1000.jpg)
+  const images = Array.from({ length: 1001 }, (_, i) => ({
     id: i,
-    url: `/images/frame_${i}.jpg`,
-    thumb: `/images/frame_${i}.jpg`
+    url: `/images/frame_${i.toString().padStart(4, '0')}.jpg`,
+    thumb: `/images/frame_${i.toString().padStart(4, '0')}.jpg`
   }));
 
   // Load annotations from Firebase
@@ -200,7 +200,23 @@ const App = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-black flex flex-col">
+    <div className="w-full h-screen bg-black flex flex-col" style={{ cursor: 'none' }}>
+      {/* Custom Cursor for homepage */}
+      {!selectedImage && (
+        <div
+          className="fixed pointer-events-none z-50"
+          style={{
+            left: cursorPos.x,
+            top: cursorPos.y,
+            width: '40px',
+            height: '40px',
+            border: '5px solid red',
+            borderRadius: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      )}
+
       {/* Header */}
       <div className="bg-red-600 text-black text-center py-3 text-2xl font-bold italic">
         ALL NOISE IS POTENTIAL SIGNAL
@@ -212,7 +228,8 @@ const App = () => {
       </audio>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-hidden relative">
+      <div className="flex-1 overflow-hidden relative" 
+           onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
         {/* Image Grid */}
         <div className="grid gap-px bg-yellow-600 h-full overflow-y-auto p-px" style={{
           gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))'
@@ -220,6 +237,7 @@ const App = () => {
           {images.map((img) => (
             <div
               key={img.id}
+              data-image-id={img.id}
               className="bg-black cursor-pointer relative hover:opacity-80 transition-opacity"
               style={{ aspectRatio: '16/9' }}
               onClick={() => openGalleryView(img.id)}
@@ -231,19 +249,79 @@ const App = () => {
               />
               {annotations[img.id] && annotations[img.id].length > 0 && (
                 <div className="absolute inset-0 pointer-events-none">
-                  {annotations[img.id].map((ann, idx) => (
-                    <div
-                      key={idx}
-                      className="absolute border-2 border-yellow-400"
-                      style={{
-                        left: `${(Math.min(ann.startX, ann.endX) / 1600) * 100}%`,
-                        top: `${(Math.min(ann.startY, ann.endY) / 900) * 100}%`,
-                        width: ann.type === 'rectangle' ? `${(Math.abs(ann.endX - ann.startX) / 1600) * 100}%` : '20px',
-                        height: ann.type === 'rectangle' ? `${(Math.abs(ann.endY - ann.startY) / 900) * 100}%` : '20px',
-                        borderRadius: ann.type === 'circle' ? '50%' : '0'
-                      }}
-                    />
-                  ))}
+                  {annotations[img.id].map((ann, idx) => {
+                    // Get the original image dimensions (assuming 16:9 aspect ratio)
+                    const originalWidth = 1600;
+                    const originalHeight = 900;
+                    
+                    // Calculate thumbnail dimensions
+                    const thumbnailElement = document.querySelector(`[data-image-id="${img.id}"]`);
+                    const thumbWidth = thumbnailElement ? thumbnailElement.offsetWidth : 200;
+                    const thumbHeight = thumbnailElement ? thumbnailElement.offsetHeight : 112.5;
+                    
+                    // Calculate scale factors
+                    const scaleX = thumbWidth / originalWidth;
+                    const scaleY = thumbHeight / originalHeight;
+                    
+                    if (ann.type === 'rectangle') {
+                      return (
+                        <div
+                          key={idx}
+                          className="absolute border-2 border-yellow-400"
+                          style={{
+                            left: `${(Math.min(ann.startX, ann.endX) * scaleX)}px`,
+                            top: `${(Math.min(ann.startY, ann.endY) * scaleY)}px`,
+                            width: `${(Math.abs(ann.endX - ann.startX) * scaleX)}px`,
+                            height: `${(Math.abs(ann.endY - ann.startY) * scaleY)}px`,
+                          }}
+                        />
+                      );
+                    } else if (ann.type === 'circle') {
+                      const width = ann.endX - ann.startX;
+                      const height = ann.endY - ann.startY;
+                      const radius = Math.sqrt(width * width + height * height) / 2;
+                      const centerX = (ann.startX + ann.endX) / 2;
+                      const centerY = (ann.startY + ann.endY) / 2;
+                      const scaledRadius = radius * Math.min(scaleX, scaleY);
+                      
+                      return (
+                        <div
+                          key={idx}
+                          className="absolute border-2 border-yellow-400 rounded-full"
+                          style={{
+                            left: `${(centerX * scaleX) - scaledRadius}px`,
+                            top: `${(centerY * scaleY) - scaledRadius}px`,
+                            width: `${scaledRadius * 2}px`,
+                            height: `${scaledRadius * 2}px`,
+                          }}
+                        />
+                      );
+                    } else if (ann.type === 'arrow') {
+                      // For arrows, we'll show a simple line scaled down
+                      const startX = ann.startX * scaleX;
+                      const startY = ann.startY * scaleY;
+                      const endX = ann.endX * scaleX;
+                      const endY = ann.endY * scaleY;
+                      const length = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+                      const angle = Math.atan2(endY - startY, endX - startX);
+                      
+                      return (
+                        <div
+                          key={idx}
+                          className="absolute border-t-2 border-yellow-400"
+                          style={{
+                            left: `${startX}px`,
+                            top: `${startY}px`,
+                            width: `${length}px`,
+                            height: '0px',
+                            transformOrigin: '0 0',
+                            transform: `rotate(${angle}rad)`,
+                          }}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
                 </div>
               )}
             </div>
@@ -378,7 +456,7 @@ const App = () => {
             onClick={toggleAudio}
             className={audioPlaying ? 'underline' : ''}
           >
-            / PAUSE
+            PAUSE
           </button>
         </div>
       </div>
