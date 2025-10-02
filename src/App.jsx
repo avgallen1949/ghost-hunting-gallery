@@ -276,10 +276,14 @@ const App = () => {
                   {annotations[img.id].map((ann, idx) => {
                     console.log('Rendering annotation:', ann, 'for image:', img.id);
                     
-                    const originalWidth = 1600;
-                    const originalHeight = 900;
-                    const thumbWidth = 200;
-                    const thumbHeight = 112.5;
+                    // Use actual image dimensions from your files
+                    const originalWidth = 1600;  // Your actual image width
+                    const originalHeight = 900;  // Your actual image height
+                    
+                    // Get the actual thumbnail container dimensions
+                    const thumbnailContainer = document.querySelector(`[data-image-id="${img.id}"]`);
+                    const thumbWidth = thumbnailContainer ? thumbnailContainer.offsetWidth : 280;
+                    const thumbHeight = thumbnailContainer ? thumbnailContainer.offsetHeight : 157.5; // 16:9 ratio
                     
                     const scaleX = thumbWidth / originalWidth;
                     const scaleY = thumbHeight / originalHeight;
@@ -390,7 +394,7 @@ const App = () => {
               </button>
 
               {/* Image Container */}
-              <div className="relative max-w-5xl max-h-[80vh] border-4 border-yellow-400">
+              <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '4px solid #fff200' }}>
                 <img
                   ref={imageRef}
                   src={images[selectedImage].url}
@@ -421,25 +425,25 @@ const App = () => {
               </button>
 
               {/* Tool Selection */}
-              <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex gap-4 p-3 rounded z-50" style={{ backgroundColor: '#fff200' }}>
+              <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex gap-4 p-3 rounded z-50" style={{ backgroundColor: '#ff1200' }}>
                 <button
                   onClick={() => setCurrentTool(currentTool === 'circle' ? null : 'circle')}
-                  className={`p-3 rounded ${currentTool === 'circle' ? 'text-black' : 'text-black'}`}
-                  style={{ backgroundColor: currentTool === 'circle' ? 'black' : '#fff200' }}
+                  className={`p-3 rounded ${currentTool === 'circle' ? 'text-red-600' : 'text-black'}`}
+                  style={{ backgroundColor: currentTool === 'circle' ? '#fff200' : '#ff1200' }}
                 >
                   <Circle size={24} />
                 </button>
                 <button
                   onClick={() => setCurrentTool(currentTool === 'rectangle' ? null : 'rectangle')}
-                  className={`p-3 rounded ${currentTool === 'rectangle' ? 'text-black' : 'text-black'}`}
-                  style={{ backgroundColor: currentTool === 'rectangle' ? 'black' : '#fff200' }}
+                  className={`p-3 rounded ${currentTool === 'rectangle' ? 'text-red-600' : 'text-black'}`}
+                  style={{ backgroundColor: currentTool === 'rectangle' ? '#fff200' : '#ff1200' }}
                 >
                   <Square size={24} />
                 </button>
                 <button
                   onClick={() => setCurrentTool(currentTool === 'arrow' ? null : 'arrow')}
-                  className={`p-3 rounded ${currentTool === 'arrow' ? 'text-black' : 'text-black'}`}
-                  style={{ backgroundColor: currentTool === 'arrow' ? 'black' : '#fff200' }}
+                  className={`p-3 rounded ${currentTool === 'arrow' ? 'text-red-600' : 'text-black'}`}
+                  style={{ backgroundColor: currentTool === 'arrow' ? '#fff200' : '#ff1200' }}
                 >
                   <MoveRight size={24} />
                 </button>
