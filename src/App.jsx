@@ -255,14 +255,14 @@ const App = () => {
       <div className="flex-1 overflow-hidden relative" 
            onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
         {/* Image Grid */}
-        <div className="grid gap-px bg-yellow-600 h-full overflow-y-auto p-px" style={{
+        <div className="grid gap-1 bg-black h-full overflow-y-auto p-1" style={{
           gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))'
         }}>
           {images.map((img) => (
             <div
               key={img.id}
               data-image-id={img.id}
-              className="bg-black cursor-pointer relative"
+              className="bg-black cursor-pointer relative border-2 border-yellow-600"
               style={{ aspectRatio: '16/9' }}
               onClick={() => openGalleryView(img.id)}
             >
@@ -274,13 +274,12 @@ const App = () => {
               {annotations[img.id] && annotations[img.id].length > 0 && (
                 <div className="absolute inset-0 pointer-events-none z-10">
                   {annotations[img.id].map((ann, idx) => {
-                    console.log('Rendering annotation:', ann, 'for image:', img.id); // Debug log
+                    console.log('Rendering annotation:', ann, 'for image:', img.id);
                     
-                    // Use fixed scaling based on typical thumbnail size
                     const originalWidth = 1600;
                     const originalHeight = 900;
-                    const thumbWidth = 200; // Approximate thumbnail width
-                    const thumbHeight = 112.5; // 16:9 ratio
+                    const thumbWidth = 200;
+                    const thumbHeight = 112.5;
                     
                     const scaleX = thumbWidth / originalWidth;
                     const scaleY = thumbHeight / originalHeight;
