@@ -17,7 +17,7 @@ const App = () => {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [showCursor, setShowCursor] = useState(false);
 
-  // Generate image paths for your 1160 frames (frame_0000.jpg to frame_1000.jpg)
+  // Generate image paths for your 1001 frames (frame_0000.jpg to frame_1000.jpg)
   const images = Array.from({ length: 1001 }, (_, i) => ({
     id: i,
     url: `/images/frame_${i.toString().padStart(4, '0')}.jpg`,
@@ -169,7 +169,7 @@ const App = () => {
   };
 
   const drawAnnotation = (ctx, ann) => {
-    ctx.strokeStyle = '#ff1200';
+    ctx.strokeStyle = '#fff200';
     ctx.lineWidth = 3;
     
     const width = ann.endX - ann.startX;
@@ -234,7 +234,7 @@ const App = () => {
             top: cursorPos.y,
             width: '70px',
             height: '70px',
-            border: '5px solid #ff1200',
+            border: '5px solid #fff200',
             borderRadius: '50%',
             transform: 'translate(-50%, -50%)',
           }}
@@ -242,7 +242,7 @@ const App = () => {
       )}
 
       {/* Header */}
-      <div className="bg-black text-white text-center py-3 text-2xl font-bold italic ghost-header">
+      <div className="bg-black text-white text-center py-3 text-2xl font-bold italic text-header">
         ALL NOISE IS POTENTIAL SIGNAL
       </div>
 
@@ -263,7 +263,7 @@ const App = () => {
               key={img.id}
               data-image-id={img.id}
               className="bg-black cursor-pointer relative"
-              style={{ aspectRatio: '16/9', border: '1px solid #fff200' }}
+              style={{ aspectRatio: '16/9', border: '1px solid white' }}
               onClick={() => openGalleryView(img.id)}
             >
               <img
@@ -307,7 +307,7 @@ const App = () => {
                               top: `${top}px`,
                               width: `${width}px`,
                               height: `${height}px`,
-                              border: '2px solid #ff1200',
+                              border: '2px solid #fff200',
                               zIndex: 20,
                             }}
                           />
@@ -334,7 +334,7 @@ const App = () => {
                             top: `${scaledCenterY - scaledRadius}px`,
                             width: `${scaledRadius * 2}px`,
                             height: `${scaledRadius * 2}px`,
-                            border: '2px solid #ff1200',
+                            border: '2px solid #fff200',
                             zIndex: 20,
                           }}
                         />
@@ -359,7 +359,7 @@ const App = () => {
                               top: `${startY}px`,
                               width: `${length}px`,
                               height: '2px',
-                              backgroundColor: '#ff1200',
+                              backgroundColor: '#fff200',
                               transformOrigin: '0 0',
                               transform: `rotate(${angle}rad)`,
                               zIndex: 20,
@@ -388,7 +388,7 @@ const App = () => {
                 top: cursorPos.y,
                 width: '70px',
                 height: '70px',
-                border: '5px solid #ff1200',
+                border: '5px solid #fff200',
                 borderRadius: '50%',
                 transform: 'translate(-50%, -50%)',
               }}
@@ -398,7 +398,7 @@ const App = () => {
               {/* Close Button */}
               <button
                 onClick={closeGalleryView}
-                className="absolute top-4 right-4 text-yellow-400 hover:text-yellow-300 z-50"
+                className="absolute top-4 right-4 text-white hover:text-gray-300 z-50"
               >
                 <X size={48} />
               </button>
@@ -406,7 +406,7 @@ const App = () => {
               {/* Previous Button */}
               <button
                 onClick={() => navigateImage(-1)}
-                className="absolute left-4 text-yellow-400 hover:text-yellow-300 text-6xl z-50"
+                className="absolute left-4 text-white hover:text-gray-300 text-6xl z-50"
               >
                 <ChevronLeft size={64} />
               </button>
@@ -431,13 +431,12 @@ const App = () => {
                   onMouseEnter={() => setShowCursor(true)}
                   onMouseLeave={() => setShowCursor(false)}
                 />
-                {/* Custom Cursor - removed since we have the main one now */}
               </div>
 
               {/* Next Button */}
               <button
                 onClick={() => navigateImage(1)}
-                className="absolute right-4 text-yellow-400 hover:text-yellow-300 text-6xl z-50"
+                className="absolute right-4 text-white hover:text-gray-300 text-6xl z-50"
               >
                 <ChevronRight size={64} />
               </button>
@@ -472,7 +471,7 @@ const App = () => {
           className={`absolute bottom-0 left-0 right-0 transition-transform duration-300 ${
             infoOpen ? 'translate-y-0' : 'translate-y-full'
           }`}
-          style={{ height: 'calc(100% - 120px)', backgroundColor: 'black' }}
+          style={{ height: 'calc(100% - 120px)', backgroundColor: 'black', zIndex: 100 }}
         >
           <div className="p-8 text-white overflow-y-auto h-full">
             <p className="text-lg leading-relaxed mb-4">
