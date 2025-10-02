@@ -10,11 +10,12 @@
 
 @font-face {
   font-family: 'Exposure';
-  src: url('./ExposureItalic.otf') format('otf'),
+  src: url('/ExposureItalic.otf') format('opentype');
+  font-display: swap;
 }
 
 .text-header {
-  font-family: 'Exposure', system-ui, -apple-system, sans-serif-serif;
+  font-family: 'Exposure', system-ui, -apple-system, sans-serif;
 }
 
 body {

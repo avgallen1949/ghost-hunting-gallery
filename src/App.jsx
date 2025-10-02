@@ -169,7 +169,7 @@ const App = () => {
   };
 
   const drawAnnotation = (ctx, ann) => {
-    ctx.strokeStyle = '#fff200';
+    ctx.strokeStyle = '#ff1200';
     ctx.lineWidth = 3;
     
     const width = ann.endX - ann.startX;
@@ -232,9 +232,9 @@ const App = () => {
           style={{
             left: cursorPos.x,
             top: cursorPos.y,
-            width: '90px',
-            height: '90px',
-            border: '4px solid #fff200',
+            width: '70px',
+            height: '70px',
+            border: '5px solid #ff1200',
             borderRadius: '50%',
             transform: 'translate(-50%, -50%)',
           }}
@@ -242,7 +242,7 @@ const App = () => {
       )}
 
       {/* Header */}
-      <div className="bg-black text-white text-center py-3 text-2xl font-bold italic">
+      <div className="bg-black text-white text-center py-3 text-2xl font-bold italic ghost-header">
         ALL NOISE IS POTENTIAL SIGNAL
       </div>
 
@@ -262,8 +262,8 @@ const App = () => {
             <div
               key={img.id}
               data-image-id={img.id}
-              className="bg-black cursor-pointer relative border"
-              style={{ aspectRatio: '16/9', borderColor: 'white' }}
+              className="bg-black cursor-pointer relative"
+              style={{ aspectRatio: '16/9', border: '1px solid #fff200' }}
               onClick={() => openGalleryView(img.id)}
             >
               <img
@@ -289,20 +289,30 @@ const App = () => {
                     const scaleY = thumbHeight / originalHeight;
                     
                     if (ann.type === 'rectangle') {
-                      return (
-                        <div
-                          key={idx}
-                          className="absolute bg-transparent"
-                          style={{
-                            left: `${(Math.min(ann.startX, ann.endX) * scaleX)}px`,
-                            top: `${(Math.min(ann.startY, ann.endY) * scaleY)}px`,
-                            width: `${(Math.abs(ann.endX - ann.startX) * scaleX)}px`,
-                            height: `${(Math.abs(ann.endY - ann.startY) * scaleY)}px`,
-                            border: '2px solid #fff200',
-                            zIndex: 20,
-                          }}
-                        />
-                      );
+                      // Clamp rectangle to thumbnail bounds
+                      const left = Math.max(0, Math.min(ann.startX, ann.endX) * scaleX);
+                      const top = Math.max(0, Math.min(ann.startY, ann.endY) * scaleY);
+                      const right = Math.min(thumbWidth, Math.max(ann.startX, ann.endX) * scaleX);
+                      const bottom = Math.min(thumbHeight, Math.max(ann.startY, ann.endY) * scaleY);
+                      const width = right - left;
+                      const height = bottom - top;
+                      
+                      if (width > 0 && height > 0) {
+                        return (
+                          <div
+                            key={idx}
+                            className="absolute bg-transparent"
+                            style={{
+                              left: `${left}px`,
+                              top: `${top}px`,
+                              width: `${width}px`,
+                              height: `${height}px`,
+                              border: '2px solid #ff1200',
+                              zIndex: 20,
+                            }}
+                          />
+                        );
+                      }
                     } else if (ann.type === 'circle') {
                       const width = ann.endX - ann.startX;
                       const height = ann.endY - ann.startY;
@@ -311,44 +321,52 @@ const App = () => {
                       const centerY = (ann.startY + ann.endY) / 2;
                       const scaledRadius = radius * Math.min(scaleX, scaleY);
                       
+                      // Clamp circle to thumbnail bounds
+                      const scaledCenterX = Math.max(scaledRadius, Math.min(thumbWidth - scaledRadius, centerX * scaleX));
+                      const scaledCenterY = Math.max(scaledRadius, Math.min(thumbHeight - scaledRadius, centerY * scaleY));
+                      
                       return (
                         <div
                           key={idx}
                           className="absolute rounded-full bg-transparent"
                           style={{
-                            left: `${(centerX * scaleX) - scaledRadius}px`,
-                            top: `${(centerY * scaleY) - scaledRadius}px`,
+                            left: `${scaledCenterX - scaledRadius}px`,
+                            top: `${scaledCenterY - scaledRadius}px`,
                             width: `${scaledRadius * 2}px`,
                             height: `${scaledRadius * 2}px`,
-                            border: '2px solid #fff200',
+                            border: '2px solid #ff1200',
                             zIndex: 20,
                           }}
                         />
                       );
                     } else if (ann.type === 'arrow') {
-                      const startX = ann.startX * scaleX;
-                      const startY = ann.startY * scaleY;
-                      const endX = ann.endX * scaleX;
-                      const endY = ann.endY * scaleY;
+                      // Clamp arrow endpoints to thumbnail bounds
+                      const startX = Math.max(0, Math.min(thumbWidth, ann.startX * scaleX));
+                      const startY = Math.max(0, Math.min(thumbHeight, ann.startY * scaleY));
+                      const endX = Math.max(0, Math.min(thumbWidth, ann.endX * scaleX));
+                      const endY = Math.max(0, Math.min(thumbHeight, ann.endY * scaleY));
+                      
                       const length = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
                       const angle = Math.atan2(endY - startY, endX - startX);
                       
-                      return (
-                        <div
-                          key={idx}
-                          className="absolute"
-                          style={{
-                            left: `${startX}px`,
-                            top: `${startY}px`,
-                            width: `${length}px`,
-                            height: '2px',
-                            backgroundColor: '#fff200',
-                            transformOrigin: '0 0',
-                            transform: `rotate(${angle}rad)`,
-                            zIndex: 20,
-                          }}
-                        />
-                      );
+                      if (length > 0) {
+                        return (
+                          <div
+                            key={idx}
+                            className="absolute"
+                            style={{
+                              left: `${startX}px`,
+                              top: `${startY}px`,
+                              width: `${length}px`,
+                              height: '2px',
+                              backgroundColor: '#ff1200',
+                              transformOrigin: '0 0',
+                              transform: `rotate(${angle}rad)`,
+                              zIndex: 20,
+                            }}
+                          />
+                        );
+                      }
                     }
                     return null;
                   })}
@@ -368,9 +386,9 @@ const App = () => {
               style={{
                 left: cursorPos.x,
                 top: cursorPos.y,
-                width: '90px',
-                height: '90px',
-                border: '4px solid #fff200',
+                width: '70px',
+                height: '70px',
+                border: '5px solid #ff1200',
                 borderRadius: '50%',
                 transform: 'translate(-50%, -50%)',
               }}
@@ -380,7 +398,7 @@ const App = () => {
               {/* Close Button */}
               <button
                 onClick={closeGalleryView}
-                className="absolute top-4 right-4 text-white-400 hover:text-white-300 z-50"
+                className="absolute top-4 right-4 text-yellow-400 hover:text-yellow-300 z-50"
               >
                 <X size={48} />
               </button>
@@ -388,13 +406,13 @@ const App = () => {
               {/* Previous Button */}
               <button
                 onClick={() => navigateImage(-1)}
-                className="absolute left-4 text-white-400 hover:text-white-300 text-6xl z-50"
+                className="absolute left-4 text-yellow-400 hover:text-yellow-300 text-6xl z-50"
               >
                 <ChevronLeft size={64} />
               </button>
 
               {/* Image Container */}
-              <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '5px solid fff200' }}>
+              <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '4px solid white' }}>
                 <img
                   ref={imageRef}
                   src={images[selectedImage].url}
@@ -419,7 +437,7 @@ const App = () => {
               {/* Next Button */}
               <button
                 onClick={() => navigateImage(1)}
-                className="absolute right-4 text-white-400 hover:text-white-300 text-6xl z-50"
+                className="absolute right-4 text-yellow-400 hover:text-yellow-300 text-6xl z-50"
               >
                 <ChevronRight size={64} />
               </button>
