@@ -232,8 +232,8 @@ const App = () => {
           style={{
             left: cursorPos.x,
             top: cursorPos.y,
-            width: '50px',
-            height: '50px',
+            width: '70px',
+            height: '70px',
             border: '5px solid #ff1200',
             borderRadius: '50%',
             transform: 'translate(-50%, -50%)',
@@ -256,7 +256,7 @@ const App = () => {
            onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
         {/* Image Grid */}
         <div className="grid bg-black h-full overflow-y-auto" style={{
-          gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))'
+          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))'
         }}>
           {images.map((img) => (
             <div
@@ -364,8 +364,8 @@ const App = () => {
               style={{
                 left: cursorPos.x,
                 top: cursorPos.y,
-                width: '50px',
-                height: '50px',
+                width: '70px',
+                height: '70px',
                 border: '5px solid #ff1200',
                 borderRadius: '50%',
                 transform: 'translate(-50%, -50%)',
@@ -450,10 +450,10 @@ const App = () => {
 
         {/* Information Panel */}
         <div
-          className={`absolute bottom-0 left-0 right-0 bg-red-600 transition-transform duration-300 ${
+          className={`absolute bottom-0 left-0 right-0 transition-transform duration-300 ${
             infoOpen ? 'translate-y-0' : 'translate-y-full'
           }`}
-          style={{ height: 'calc(100% - 120px)' }}
+          style={{ height: 'calc(100% - 120px)', backgroundColor: '#ff1200' }}
         >
           <div className="p-8 text-black overflow-y-auto h-full">
             <p className="text-lg leading-relaxed mb-4">
