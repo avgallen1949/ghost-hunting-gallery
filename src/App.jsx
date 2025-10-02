@@ -476,11 +476,10 @@ const App = () => {
           <div className="p-8 text-white overflow-y-auto h-full">
             <div className="max-w-none md:max-w-[60%]">
               <p className="text-lg leading-relaxed mb-4">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-              </p>
+The night of September 28, 2025, Brian taught Avrie about ghost hunting in Saint Patrick’s Cemetery in Providence, Rhode Island. They brought a GoPro camera, a cassette audio recorder, a digital audio recorder, and iPhones to take long exposure photos. This website documents their most interesting encounter through photo and audio documentation. The photos are stills from Avrie’s GoPro, which mysteriously turned out as a time lapse for this particular encounter, and the audio is from Brian’s audio recorders layered over one another. The documentation has not been edited aside from the audio layering. However, due to the failure of the video camera, Avrie created this website to find potential anomalies in the stills. Please play the audio and label images using the provided tool in the gallery view. 
+             </p>
               <p className="text-lg leading-relaxed">
-                Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-              </p>
+The interpretation is subjective, and all noise is potential signal. Thanks for your help.               </p>
             </div>
           </div>
         </div>
