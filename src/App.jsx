@@ -5,6 +5,7 @@ import { database } from './firebase';
 
 const App = () => {
   const [infoOpen, setInfoOpen] = useState(false);
+  const [noiseOpen, setNoiseOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [annotations, setAnnotations] = useState({});
   const [currentTool, setCurrentTool] = useState(null);
@@ -244,7 +245,13 @@ const App = () => {
 
       {/* Header */}
       <div className="bg-black text-white text-center py-3 text-2xl font-bold italic text-header">
-        ALL NOISE IS POTENTIAL <span style={{ color: '#fff200' }}>SIGNAL</span>
+        ALL <button 
+          onClick={() => setNoiseOpen(!noiseOpen)}
+          className="hover:opacity-80 transition-opacity"
+          style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}
+        >
+          NOISE
+        </button> IS POTENTIAL <span style={{ color: '#fff200' }}>SIGNAL</span>
       </div>
 
       {/* Audio Element */}
@@ -255,6 +262,24 @@ const App = () => {
       {/* Main Content */}
       <div className="flex-1 overflow-hidden relative" 
            onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
+        {/* Secret NOISE Panel */}
+        <div
+          className={`absolute top-16 left-0 right-0 transition-transform duration-300 ${
+            noiseOpen ? 'translate-y-0' : '-translate-y-full'
+          }`}
+          style={{ height: 'calc(50% - 60px)', backgroundColor: 'black', zIndex: 90 }}
+        >
+          <div className="p-8 text-white overflow-y-auto h-full">
+            <div className="max-w-none md:max-w-[60%]">
+              <p className="text-lg leading-relaxed mb-4">
+Apophenia is defined as the perception of patterns within random data. The most common examples are people seeing faces in clouds or on the moon. Apophenia is about drawing connections and conclusions from sources with no direct connection other than their indissoluble perceptual simultaneity. This has become necessary to adapt to our world today. Apophenia is hyperaesthetic response.                </p>
+              <p className="text-lg leading-relaxed">
+Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embodied by the conspiracy theorist and the paranormal hunter — overwhelming diagrams, arrows, blurry images, labeling, glitch-as-proof, and infinite connections. It can be thought of as an opposite to what Susan Buck-Morss describes as anesthetic experience — the dulling of our senses from overwhelm. These responses to modern shock, technologies, global political crises, and opacity in the world are not opposites as much as they are sisters. They both point to the same issue but ultimately do not lead us through the problem, but stuck within it.              
+</p>
+            </div>
+          </div>
+        </div>
+
         {/* Image Grid */}
         <div className="grid bg-black h-full overflow-y-auto" style={{
           gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))'
@@ -478,18 +503,16 @@ const App = () => {
           <div className="p-8 text-white overflow-y-auto h-full">
             <div className="max-w-none md:max-w-[60%]">
               <p className="text-lg leading-relaxed mb-4">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-              </p>
+                The night of September 28, 2025, Brian taught Avrie about ghost hunting in Saint Patrick’s Cemetery in Providence, Rhode Island. They brought a GoPro camera, a cassette audio recorder, a digital audio recorder, and iPhones to take long exposure photos. This website documents their most interesting encounter through photo and audio documentation. The photos are stills from Avrie’s GoPro, which mysteriously turned out as a time lapse for this particular part of the night, and the audio is from Brian’s audio recorders layered over one another. The documentation has not been edited aside from the audio layering. However, due to the failure of the video camera, Avrie created this website to find potential anomalies in the stills. Please play the audio and label images using the provided tool in the gallery view.               </p>
               <p className="text-lg leading-relaxed">
-                Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-              </p>
+                The interpretation is subjective, and all noise is potential signal. Thanks for your help.</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="bg-black text-white py-3 px-6 flex justify-between items-center text-lg font-bold italic">
+      <div className="bg-black text-white py-3 px-6 flex justify-between items-center text-lg font-bold italic" style={{ zIndex: 200 }}>
         <button
           onClick={() => setInfoOpen(!infoOpen)}
           className="hover:underline"
