@@ -505,7 +505,7 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
               <p className="text-lg leading-relaxed mb-4">
 The night of September 28, 2025, Brian taught Avrie about ghost hunting in Saint Patrick’s Cemetery in Providence, Rhode Island. They brought a GoPro camera, a cassette audio recorder, a digital audio recorder, and iPhones to take long exposure photos. This website documents their most interesting encounter through photo and audio documentation. The photos are stills from Avrie’s GoPro, which mysteriously turned out as a time lapse for this particular part of the night, and the audio is from Brian’s audio recorders layered over one another. The documentation has not been edited aside from the audio layering. However, due to the failure of the video camera, Avrie created this website to find potential anomalies in the stills. Please play the audio and label images using the provided tool in the gallery view.               </p>
               <p className="text-lg leading-relaxed">
-The interpretation is subjective, and all noise is potential signal. The truth is out there. Thanks for your help.</p>
+Identifying paranormal phenomena is never clear-cut, and all noise is potential signal. Thanks for your help.</p>
             </div>
           </div>
         </div>
