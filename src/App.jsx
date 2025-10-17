@@ -18,14 +18,12 @@ const App = () => {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [showCursor, setShowCursor] = useState(false);
 
-  // Generate image paths for your 1001 frames (frame_0000.jpg to frame_1000.jpg)
   const images = Array.from({ length: 1001 }, (_, i) => ({
     id: i,
     url: `/images/frame_${i.toString().padStart(4, '0')}.jpg`,
     thumb: `/images/frame_${i.toString().padStart(4, '0')}.jpg`
   }));
 
-  // Load annotations from Firebase
   useEffect(() => {
     const annotationsRef = ref(database, 'annotations');
     
@@ -58,12 +56,11 @@ const App = () => {
 
   useEffect(() => {
     if (audioRef.current) {
-      // Try to play automatically, but handle if browser blocks it
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch(error => {
           console.log('Auto-play was blocked:', error);
-          setAudioPlaying(false); // Update state if auto-play fails
+          setAudioPlaying(false); 
         });
       }
     }
@@ -226,7 +223,6 @@ const App = () => {
 
   return (
     <div className="w-full h-screen bg-black flex flex-col" style={{ cursor: 'none' }}>
-      {/* Custom Cursor for homepage */}
       {!selectedImage && (
         <div
           className="fixed pointer-events-none"
@@ -243,7 +239,6 @@ const App = () => {
         />
       )}
 
-      {/* Header */}
       <div className="bg-black text-white text-center py-3 text-2xl font-bold italic text-header">
         ALL <button 
           onClick={() => setNoiseOpen(!noiseOpen)}
@@ -254,33 +249,13 @@ const App = () => {
         </button> IS POTENTIAL <span style={{ color: '#fff200' }}>SIGNAL</span>
       </div>
 
-      {/* Audio Element */}
       <audio ref={audioRef} loop>
         <source src="/audio.mp3" type="audio/mpeg" />
       </audio>
 
-      {/* Main Content */}
       <div className="flex-1 overflow-hidden relative" 
            onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
-        {/* Secret NOISE Panel */}
-        <div
-          className={`absolute top-0 left-0 right-0 transition-transform duration-300 ${
-            noiseOpen ? 'translate-y-0' : '-translate-y-full'
-          }`}
-          style={{ height: 'calc(100% - 120px)', backgroundColor: 'black', zIndex: 90 }}
-        >
-          <div className="p-8 text-white overflow-y-auto h-full">
-            <div className="max-w-none md:max-w-[60%]">
-              <p className="text-lg leading-relaxed mb-4">
-Apophenia is defined as the perception of patterns within random data. The most common examples are people seeing faces in clouds or on the moon. Apophenia is about drawing connections and conclusions from sources with no direct connection other than their perceptual simultaneity. This has become necessary to adapt to our world today. Constant apophenia is hyperaesthetic response.</p>              
-<p className="text-lg leading-relaxed">
-Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embodied by the devout conspiracy theorist and the paranormal hunter — overwhelming diagrams, arrows, blurry images, labeling, glitch-as-proof, and infinite connections. Ghost hunting, while innocuous in this instance, requires a hyperaesthetic engagement both during and after. It can be thought of as an opposite to what Susan Buck-Morss describes as anaesthetic experience — the dulling of our senses from overwhelm. The hyperaesthetic body is hypervigilent and hyper-sensing. These responses to modern shock, technologies, global political crises, and opacity in the world are not opposites as much as they are sisters. They both point to the same issue but ultimately do not lead us through the problem, but stuck within it.              
-</p>
-            </div>
-          </div>
-        </div>
 
-        {/* Image Grid */}
         <div className="grid bg-black h-full overflow-y-auto" style={{
           gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))'
         }}>
@@ -302,11 +277,10 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
                   {annotations[img.id].map((ann, idx) => {
                     console.log('Rendering annotation:', ann, 'for image:', img.id);
                     
-                    // Use actual image dimensions from your files
-                    const originalWidth = 1600;  // Your actual image width
-                    const originalHeight = 900;  // Your actual image height
+                    const originalWidth = 1600;  
+                    const originalHeight = 900; 
                     
-                    // Get the actual thumbnail container dimensions
+                    
                     const thumbnailContainer = document.querySelector(`[data-image-id="${img.id}"]`);
                     const thumbWidth = thumbnailContainer ? thumbnailContainer.offsetWidth : 280;
                     const thumbHeight = thumbnailContainer ? thumbnailContainer.offsetHeight : 157.5; // 16:9 ratio
@@ -315,7 +289,7 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
                     const scaleY = thumbHeight / originalHeight;
                     
                     if (ann.type === 'rectangle') {
-                      // Clamp rectangle to thumbnail bounds
+                      
                       const left = Math.max(0, Math.min(ann.startX, ann.endX) * scaleX);
                       const top = Math.max(0, Math.min(ann.startY, ann.endY) * scaleY);
                       const right = Math.min(thumbWidth, Math.max(ann.startX, ann.endX) * scaleX);
@@ -347,7 +321,7 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
                       const centerY = (ann.startY + ann.endY) / 2;
                       const scaledRadius = radius * Math.min(scaleX, scaleY);
                       
-                      // Clamp circle to thumbnail bounds
+                      
                       const scaledCenterX = Math.max(scaledRadius, Math.min(thumbWidth - scaledRadius, centerX * scaleX));
                       const scaledCenterY = Math.max(scaledRadius, Math.min(thumbHeight - scaledRadius, centerY * scaleY));
                       
@@ -366,7 +340,7 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
                         />
                       );
                     } else if (ann.type === 'arrow') {
-                      // Clamp arrow endpoints to thumbnail bounds
+                      
                       const startX = Math.max(0, Math.min(thumbWidth, ann.startX * scaleX));
                       const startY = Math.max(0, Math.min(thumbHeight, ann.startY * scaleY));
                       const endX = Math.max(0, Math.min(thumbWidth, ann.endX * scaleX));
@@ -402,11 +376,11 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
           ))}
         </div>
 
-        {/* Gallery View Modal */}
+        
         {selectedImage !== null && (
           <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center"
                onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
-            {/* Custom Cursor for gallery view */}
+            
             <div
               className="fixed pointer-events-none"
               style={{
@@ -422,7 +396,7 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
             />
             
             <div className="relative w-full h-full flex items-center justify-center p-4">
-              {/* Close Button */}
+              
               <button
                 onClick={closeGalleryView}
                 className="absolute top-4 right-4 text-white hover:text-gray-300 z-50"
@@ -430,7 +404,7 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
                 <X size={48} />
               </button>
 
-              {/* Previous Button */}
+              
               <button
                 onClick={() => navigateImage(-1)}
                 className="absolute left-4 text-white hover:text-gray-300 text-6xl z-50"
@@ -438,7 +412,7 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
                 <ChevronLeft size={64} />
               </button>
 
-              {/* Image Container */}
+              
               <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '4px solid white' }}>
                 <img
                   ref={imageRef}
@@ -460,7 +434,7 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
                 />
               </div>
 
-              {/* Next Button */}
+              
               <button
                 onClick={() => navigateImage(1)}
                 className="absolute right-4 text-white hover:text-gray-300 text-6xl z-50"
@@ -468,7 +442,7 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
                 <ChevronRight size={64} />
               </button>
 
-              {/* Tool Selection */}
+             
               <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex gap-4 p-3 rounded z-50 bg-black">
                 <button
                   onClick={() => setCurrentTool(currentTool === 'circle' ? null : 'circle')}
@@ -493,7 +467,7 @@ Hyperaesthetics, I argue, is when all noise becomes potential signal. It is embo
           </div>
         )}
 
-        {/* Information Panel */}
+        
         <div
           className={`absolute bottom-0 left-0 right-0 transition-transform duration-300 ${
             infoOpen ? 'translate-y-0' : 'translate-y-full'
@@ -511,7 +485,7 @@ Identifying paranormal phenomena is never clear-cut, and all noise is potential 
         </div>
       </div>
 
-      {/* Footer */}
+      
       <div className="bg-black text-white py-3 px-6 flex justify-between items-center text-lg font-bold italic" style={{ zIndex: 200 }}>
         <button
           onClick={() => setInfoOpen(!infoOpen)}
