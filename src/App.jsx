@@ -5,7 +5,6 @@ import { database } from './firebase';
 
 const App = () => {
   const [infoOpen, setInfoOpen] = useState(false);
-  const [noiseOpen, setNoiseOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [annotations, setAnnotations] = useState({});
   const [currentTool, setCurrentTool] = useState(null);
@@ -18,12 +17,14 @@ const App = () => {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [showCursor, setShowCursor] = useState(false);
 
+  // Generate image paths for your 1001 frames (frame_0000.jpg to frame_1000.jpg)
   const images = Array.from({ length: 1001 }, (_, i) => ({
     id: i,
     url: `/images/frame_${i.toString().padStart(4, '0')}.jpg`,
     thumb: `/images/frame_${i.toString().padStart(4, '0')}.jpg`
   }));
 
+  // Load annotations from Firebase
   useEffect(() => {
     const annotationsRef = ref(database, 'annotations');
     
@@ -56,11 +57,12 @@ const App = () => {
 
   useEffect(() => {
     if (audioRef.current) {
+      // Try to play automatically, but handle if browser blocks it
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch(error => {
           console.log('Auto-play was blocked:', error);
-          setAudioPlaying(false); 
+          setAudioPlaying(false); // Update state if auto-play fails
         });
       }
     }
@@ -223,6 +225,7 @@ const App = () => {
 
   return (
     <div className="w-full h-screen bg-black flex flex-col" style={{ cursor: 'none' }}>
+      {/* Custom Cursor for homepage */}
       {!selectedImage && (
         <div
           className="fixed pointer-events-none"
@@ -239,23 +242,39 @@ const App = () => {
         />
       )}
 
+      {/* Header */}
       <div className="bg-black text-white text-center py-3 text-2xl font-bold italic text-header">
-        ALL <button 
-          onClick={() => setNoiseOpen(!noiseOpen)}
-          className="hover:opacity-80 transition-opacity"
-          style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}
-        >
-          NOISE
-        </button> IS POTENTIAL <span style={{ color: '#fff200' }}>SIGNAL</span>
+        ALL NOISE IS POTENTIAL <span style={{ color: '#fff200' }}>SIGNAL</span>
       </div>
 
+      {/* Audio Element */}
       <audio ref={audioRef} loop>
         <source src="/audio.mp3" type="audio/mpeg" />
       </audio>
 
+      {/* Main Content */}
       <div className="flex-1 overflow-hidden relative" 
            onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
+        {/* Secret NOISE Panel */}
+        <div
+          className={`absolute top-0 left-0 right-0 transition-transform duration-300 ${
+            noiseOpen ? 'translate-y-0' : '-translate-y-full'
+          }`}
+          style={{ height: 'calc(100% - 120px)', backgroundColor: 'black', zIndex: 90 }}
+        >
+          <div className="p-8 text-white overflow-y-auto h-full">
+            <div className="max-w-none md:max-w-[60%]">
+              <p className="text-lg leading-relaxed mb-4">
+                The concept of noise as potential signal suggests that what we dismiss as random interference might actually contain meaningful information. In paranormal investigation, this principle becomes particularly relevant as unexplained audio phenomena often hide within what appears to be ambient noise.
+              </p>
+              <p className="text-lg leading-relaxed">
+                By carefully analyzing these seemingly chaotic patterns, investigators may uncover evidence that challenges our understanding of reality. Every whisper in the static, every anomaly in the recording, represents a possible communication from beyond our normal perception.
+              </p>
+            </div>
+          </div>
+        </div>
 
+        {/* Image Grid */}
         <div className="grid bg-black h-full overflow-y-auto" style={{
           gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))'
         }}>
@@ -275,12 +294,16 @@ const App = () => {
               {annotations[img.id] && annotations[img.id].length > 0 && (
                 <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
                   {annotations[img.id].map((ann, idx) => {
-                    console.log('Rendering annotation:', ann, 'for image:', img.id);
+                                          console.log('Rendering annotation:', ann, 'for image:', img.id);
+                      
+                      // Force yellow color for all annotations regardless of stored data
+                      const annotationColor = '#fff200';
                     
-                    const originalWidth = 1600;  
-                    const originalHeight = 900; 
+                    // Use actual image dimensions from your files
+                    const originalWidth = 1600;  // Your actual image width
+                    const originalHeight = 900;  // Your actual image height
                     
-                    
+                    // Get the actual thumbnail container dimensions
                     const thumbnailContainer = document.querySelector(`[data-image-id="${img.id}"]`);
                     const thumbWidth = thumbnailContainer ? thumbnailContainer.offsetWidth : 280;
                     const thumbHeight = thumbnailContainer ? thumbnailContainer.offsetHeight : 157.5; // 16:9 ratio
@@ -289,7 +312,7 @@ const App = () => {
                     const scaleY = thumbHeight / originalHeight;
                     
                     if (ann.type === 'rectangle') {
-                      
+                      // Clamp rectangle to thumbnail bounds
                       const left = Math.max(0, Math.min(ann.startX, ann.endX) * scaleX);
                       const top = Math.max(0, Math.min(ann.startY, ann.endY) * scaleY);
                       const right = Math.min(thumbWidth, Math.max(ann.startX, ann.endX) * scaleX);
@@ -307,7 +330,7 @@ const App = () => {
                               top: `${top}px`,
                               width: `${width}px`,
                               height: `${height}px`,
-                              border: '2px solid #fff200',
+                              border: `2px solid ${annotationColor}`,
                               zIndex: 20,
                             }}
                           />
@@ -321,7 +344,7 @@ const App = () => {
                       const centerY = (ann.startY + ann.endY) / 2;
                       const scaledRadius = radius * Math.min(scaleX, scaleY);
                       
-                      
+                      // Clamp circle to thumbnail bounds
                       const scaledCenterX = Math.max(scaledRadius, Math.min(thumbWidth - scaledRadius, centerX * scaleX));
                       const scaledCenterY = Math.max(scaledRadius, Math.min(thumbHeight - scaledRadius, centerY * scaleY));
                       
@@ -340,7 +363,7 @@ const App = () => {
                         />
                       );
                     } else if (ann.type === 'arrow') {
-                      
+                      // Clamp arrow endpoints to thumbnail bounds
                       const startX = Math.max(0, Math.min(thumbWidth, ann.startX * scaleX));
                       const startY = Math.max(0, Math.min(thumbHeight, ann.startY * scaleY));
                       const endX = Math.max(0, Math.min(thumbWidth, ann.endX * scaleX));
@@ -376,11 +399,11 @@ const App = () => {
           ))}
         </div>
 
-        
+        {/* Gallery View Modal */}
         {selectedImage !== null && (
           <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center"
                onMouseMove={(e) => setCursorPos({ x: e.clientX, y: e.clientY })}>
-            
+            {/* Custom Cursor for gallery view */}
             <div
               className="fixed pointer-events-none"
               style={{
@@ -396,7 +419,7 @@ const App = () => {
             />
             
             <div className="relative w-full h-full flex items-center justify-center p-4">
-              
+              {/* Close Button */}
               <button
                 onClick={closeGalleryView}
                 className="absolute top-4 right-4 text-white hover:text-gray-300 z-50"
@@ -404,7 +427,7 @@ const App = () => {
                 <X size={48} />
               </button>
 
-              
+              {/* Previous Button */}
               <button
                 onClick={() => navigateImage(-1)}
                 className="absolute left-4 text-white hover:text-gray-300 text-6xl z-50"
@@ -412,7 +435,7 @@ const App = () => {
                 <ChevronLeft size={64} />
               </button>
 
-              
+              {/* Image Container */}
               <div className="relative max-w-5xl max-h-[80vh]" style={{ border: '4px solid white' }}>
                 <img
                   ref={imageRef}
@@ -434,7 +457,7 @@ const App = () => {
                 />
               </div>
 
-              
+              {/* Next Button */}
               <button
                 onClick={() => navigateImage(1)}
                 className="absolute right-4 text-white hover:text-gray-300 text-6xl z-50"
@@ -442,7 +465,7 @@ const App = () => {
                 <ChevronRight size={64} />
               </button>
 
-             
+              {/* Tool Selection */}
               <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex gap-4 p-3 rounded z-50 bg-black">
                 <button
                   onClick={() => setCurrentTool(currentTool === 'circle' ? null : 'circle')}
@@ -467,7 +490,7 @@ const App = () => {
           </div>
         )}
 
-        
+        {/* Information Panel */}
         <div
           className={`absolute bottom-0 left-0 right-0 transition-transform duration-300 ${
             infoOpen ? 'translate-y-0' : 'translate-y-full'
@@ -477,15 +500,17 @@ const App = () => {
           <div className="p-8 text-white overflow-y-auto h-full">
             <div className="max-w-none md:max-w-[60%]">
               <p className="text-lg leading-relaxed mb-4">
-The night of September 28, 2025, Brian taught Avrie about ghost hunting in Saint Patrick’s Cemetery in Providence, Rhode Island. They brought a GoPro camera, a cassette audio recorder, a digital audio recorder, and iPhones to take long exposure photos. This website documents their most interesting encounter through photo and audio documentation. The photos are stills from Avrie’s GoPro, which mysteriously turned out as a time lapse for this particular part of the night, and the audio is from Brian’s audio recorders layered over one another. The documentation has not been edited aside from the audio layering. However, due to the failure of the video camera, Avrie created this website to find potential anomalies in the stills. Please play the audio and label images using the provided tool in the gallery view.               </p>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+              </p>
               <p className="text-lg leading-relaxed">
-Identifying paranormal phenomena is never clear-cut, and all noise is potential signal. Thanks for your help.</p>
+                Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      
+      {/* Footer */}
       <div className="bg-black text-white py-3 px-6 flex justify-between items-center text-lg font-bold italic" style={{ zIndex: 200 }}>
         <button
           onClick={() => setInfoOpen(!infoOpen)}
