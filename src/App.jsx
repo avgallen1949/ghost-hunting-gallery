@@ -30,8 +30,10 @@ const App = () => {
       const data = snapshot.val();
       if (data) {
         setAnnotations(data);
+        console.log('All annotations loaded from Firebase:', data);
       }
     });
+
 
     return () => unsubscribe();
   }, []);
@@ -265,7 +267,7 @@ const App = () => {
                 alt={`Frame ${img.id}`}
                 className="w-full h-full object-cover"
               />
-{annotations[img.id.toString()] && annotations[img.id.toString()].length > 0 && (                
+{(console.log('Checking image', img.id, 'toString:', img.id.toString(), 'Has annotations:', !!annotations[img.id.toString()]) || annotations[img.id.toString()] && annotations[img.id.toString()].length > 0) && (           
   <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
                   {annotations[img.id.toString()].map((ann, idx) => {
                     console.log('Rendering annotation:', ann, 'for image:', img.id);
