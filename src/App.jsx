@@ -265,9 +265,9 @@ const App = () => {
                 alt={`Frame ${img.id}`}
                 className="w-full h-full object-cover"
               />
-              {annotations[img.id] && annotations[img.id].length > 0 && (
-                <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-                  {annotations[img.id].map((ann, idx) => {
+{annotations[img.id.toString()] && annotations[img.id.toString()].length > 0 && (                
+  <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
+                  {annotations[img.id.toString()].map((ann, idx) => {
                     console.log('Rendering annotation:', ann, 'for image:', img.id);
                     
                     const originalWidth = 1600;  
