@@ -253,7 +253,7 @@ const App = () => {
           gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))'
         }}>
           {images.map((img) => (
-            console.log('Checking image ID:', img.id, 'Type:', typeof img.id, 'Has annotations:', !!annotations[img.id]);
+            console.log('Checking image ID:', img.id, 'Type:', typeof img.id, 'Has annotations:', !!annotations[img.id]),
             <div
               key={img.id}
               data-image-id={img.id}
