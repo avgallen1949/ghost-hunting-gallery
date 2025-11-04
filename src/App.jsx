@@ -5,7 +5,6 @@ import { database } from './firebase';
 
 const App = () => {
   const [infoOpen, setInfoOpen] = useState(false);
-  const [noiseOpen, setNoiseOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [annotations, setAnnotations] = useState({});
   const [currentTool, setCurrentTool] = useState(null);
