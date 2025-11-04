@@ -30,7 +30,6 @@ const App = () => {
       const data = snapshot.val();
       if (data) {
         setAnnotations(data);
-        console.log('All annotations loaded from Firebase:', data);
       }
     });
 
